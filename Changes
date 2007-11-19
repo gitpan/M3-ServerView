@@ -1,0 +1,6 @@
+Revision history for Perl extension M3::ServerView.
+
+0.01  Wed Nov  7 16:39:47 2007
+	- original version; created by h2xs 1.23 with options
+		-X -n M3::ServerView
+
