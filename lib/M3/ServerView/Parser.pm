@@ -207,7 +207,7 @@ __END__
 
 =head1 NAME
 
-M3::ServerView::Parser -
+M3::ServerView::Parser - Parser for table based views
 
 =head1 SYNOPSIS
 

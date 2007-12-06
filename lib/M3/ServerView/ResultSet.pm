@@ -54,11 +54,11 @@ __END__
 
 =head1 NAME
 
-M3::ServerView::ResultSet -
-
-=head1 SYNOPSIS
+M3::ServerView::ResultSet - Contents returned by a view
 
 =head1 DESCRIPTION
+
+Instances of this class functions as an iterator for iterating over results returned when searching a view.
 
 =head1 INTERFACE
 
@@ -97,3 +97,6 @@ Returns the next item in the result set or undef if there's no more items.
 Resets the result set to start from the beginning again.
 
 =back
+
+=cut
+

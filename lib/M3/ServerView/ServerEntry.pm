@@ -28,8 +28,6 @@ __END__
 
 M3::ServerView::ServerEntry - Records returned by 'server' view.
 
-=head1 DESCRIPTION
-
 =head1 INTERFACE
 
 =head2 ATTRIBUTES

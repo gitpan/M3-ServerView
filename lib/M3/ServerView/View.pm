@@ -244,9 +244,10 @@ __END__
 
 =head1 NAME
 
-M3::Server::View - Base class for views
+M3::ServerView::View - Base class for views
 
 =head1 DESCRIPTION
+
 This class serves as a base class for 'views'. A view is a page in the web-interface which 
 contains a set of data we want to be able to access and search.
 

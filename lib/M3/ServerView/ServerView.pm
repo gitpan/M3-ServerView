@@ -29,7 +29,6 @@ sub _entry_columns {
 1;
 __END__
 
-
 =head1 NAME
 
 M3::ServerView::ServerView - Handles entries for path '/server'

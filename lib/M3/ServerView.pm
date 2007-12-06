@@ -17,7 +17,7 @@ use M3::ServerView::RootView;
 use M3::ServerView::ServerView;
 
 # Module version
-our $VERSION = "0.01";
+our $VERSION = "0.02";
 
 # Inside-out objects
 my %Base_uri;
