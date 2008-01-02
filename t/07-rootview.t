@@ -28,7 +28,7 @@ my $entry = $rs->first;
 is($entry->no, "1");
 is($entry->type, "Supervisor");
 is($entry->pid, 6443);
-is($entry->started, 1190067610);
+ok($entry->started);
 ok(!defined $entry->jobs);
 is($entry->threads, 26);
 is($entry->cpu, "2/191");

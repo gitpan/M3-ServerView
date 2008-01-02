@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                M3-ServerView
-version:             0.02
+version:             0.03
 abstract:            Perl extension for communicating with M3 ServerView
 license:             perl
 generated_by:        ExtUtils::MakeMaker version 6.36

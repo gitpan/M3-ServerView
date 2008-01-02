@@ -17,7 +17,7 @@ use M3::ServerView::RootView;
 use M3::ServerView::ServerView;
 
 # Module version
-our $VERSION = "0.02";
+our $VERSION = "0.03";
 
 # Inside-out objects
 my %Base_uri;
@@ -209,7 +209,7 @@ Claes Jakobsson, Versed Solutions C<< <claes@versed.se> >>
 
 =head1 LICENCE AND COPYRIGHT
 
-Copyright (c) 2007, Linserv AB C<< <marwil@cpan.org> >>. All rights reserved.
+Copyright (c) 2007 - 2008, Linserv AB C<< <marwil@cpan.org> >>. All rights reserved.
 
 This module is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself. See L<perlartistic>.
