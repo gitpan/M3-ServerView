@@ -137,8 +137,13 @@ sub _enter_tag {
         $self->{in_table} = 1;
         $self->{row} = 0;
         $self->{table_is_data} = 1;
+        
+        # Some pages don't send a initial tr
+        $self->{_handle_corrupt_open_row} = 1;
     }
     elsif ($tagname eq "tr" && $self->{in_table}) {
+        delete $self->{_handle_corrupt_open_row};
+        
         $self->{in_table_row} = 1;
         $self->{row}++;
         $self->{column} = 0;
@@ -153,7 +158,13 @@ sub _enter_tag {
             $self->{current_entry} = $entry;
         }
     }
-    elsif (($tagname eq "td" || $tagname eq "th") && $self->{in_table_row}) {
+    elsif (($tagname eq "td" || $tagname eq "th") && ($self->{in_table_row} || $self->{_handle_corrupt_open_row})) {
+        if ($self->{_handle_corrupt_open_row}) {
+            $self->{in_table_row} = 1;
+            $self->{row}++;
+            $self->{column} = 0;
+        }
+        
         $self->{column}++;
         $self->{in_table_cell} = 1;
     }

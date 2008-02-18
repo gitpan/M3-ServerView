@@ -35,18 +35,19 @@ sub handle_request {
     }
     
     my $path = $ENV{PATH_INFO};
-    $path = "/home" if $path eq "/";
+    $path = "/home" if $path eq "/";    
     $path .= ".html";
-
+    
     unless ($path =~ m{/\w+\.html$}) {
         croak "Failed to get ${path}";
     }
-  
+    
     my $fp = canonpath(catfile("t", "data", $path));
     open(my $in, "<", $fp);
     my $content = do { local $/; <$in>; };
     close($in);
     print "HTTP/1.0 200 OK\r\n";
+    print "X-EchoQuery: ", $ENV{QUERY_STRING}, "\r\n";
     print "Content-Type: text/html\r\nContent-length: ", length($content), "\r\n\r\n", $content;
     
     1;

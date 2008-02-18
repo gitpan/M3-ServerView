@@ -1,3 +1,8 @@
+[Changes for 0.04 - 2008-02-18]
+
+* Make parser less sensitive since HTML sent by server seems a bit broken 
+* Added find_job method to M3::ServerView that allows searching for jobs.
+
 [Changes for 0.03 - 2008-01-02]
 
 * Make t/07-rootview.t less strict about timezone

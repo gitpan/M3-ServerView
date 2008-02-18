@@ -4,7 +4,7 @@ use 5.006;
 use strict;
 use warnings;
 
-use Carp qw(croak);
+use Carp qw(croak carp);
 use HTTP::Request;
 use LWP::UserAgent;
 use Scalar::Util qw(refaddr blessed);
@@ -15,9 +15,10 @@ use URI;
 use M3::ServerView::View;
 use M3::ServerView::RootView;
 use M3::ServerView::ServerView;
+use M3::ServerView::FindJobView;
 
 # Module version
-our $VERSION = "0.03";
+our $VERSION = "0.04";
 
 # Inside-out objects
 my %Base_uri;
@@ -53,6 +54,38 @@ sub root {
     my ($self) = @_;
     my $view = $self->_load_view("");
     return $view;
+}
+
+sub find_jobs {
+    my ($self, $in_query) = @_;
+
+    croak "Missing query" unless ref $in_query eq "HASH";
+
+    my %out_query = (
+        name    => undef,
+        owner   => undef,
+        type    => undef,
+        bjno    => undef,
+        find => "Find",
+    );
+
+    if (exists $in_query->{name}) {
+        $out_query{name} = $in_query->{name};
+    }    
+    if (exists $in_query->{user}) {
+        $out_query{owner} = $in_query->{user};
+    }
+    if (exists $in_query->{type}) {
+        $out_query{type} = $in_query->{type};
+    }
+    if (exists $in_query->{batch_job_number}) {
+        $out_query{bjno} = $in_query->{batch_job_number};
+    }
+    if ($in_query->{queued}) {
+        $out_query{queued} = "on";
+    }
+
+    return $self->_load_view("/findjob", \%out_query);
 }
 
 # Loads the contents of an URL and measures the time it takes
@@ -111,6 +144,7 @@ sub password {
     my %View_class = (
         "/"         => "M3::ServerView::RootView",
         "/server"   => "M3::ServerView::ServerView",
+        "/findjob"  => "M3::ServerView::FindJobView",
     );
     
     sub _view_class_for_target {
@@ -128,7 +162,14 @@ sub _load_view {
     
     my $uri = $self->base_uri->clone;
     $uri->path($path);
-    $uri->query($query);
+
+    if (ref $query) {
+        $uri->query_form($query);
+    }
+    else {
+        $uri->query($query);
+    }
+
     my $view = $view_class->new($self, $uri);
     return $view;
 }
@@ -194,6 +235,43 @@ Returns the password for the user to connect as or undef if the password wasn't 
 
 Returns the root view - L<M3::ServerView::RootView>.
 
+=item find_jobs (QUERY)
+
+Search for jobs. The argument I<QUERY> must be a hash-reference with zero or more of the 
+following keys and values defined.
+
+=over 4
+
+=item I<name>
+
+The name of the job.
+
+=item I<user>
+
+The name of the user owning the jobs.
+
+=item I<type>
+
+The type of job - B, M, I or A
+
+=item I<batch_job_number>
+
+The job number.
+
+=item I<queued>
+
+If the job is queued.
+
+=back
+
+Examples 
+
+  # Find all jobs belonging to user SYSTEM
+  my $rs = $conn->find_jobs({ user => "SYSTEM" });
+  if ($rs->count) {
+      print "User SYSTEM has current jobs";
+  }
+  
 =back
 
 =head1 BUGS AND LIMITATIONS
